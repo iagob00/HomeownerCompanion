@@ -1,7 +1,8 @@
 package com.example.homeowner_companion
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
@@ -14,9 +15,26 @@ class WelcomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
-        mButton = findViewById<View>(R.id.getStartedButton) as Button
-        mEdit = findViewById<View>(R.id.textInput) as EditText
-        mButton!!.setOnClickListener { User.setName(mEdit!!.text.toString())}
+        mButton = findViewById<Button>(R.id.getStartedButton)
+        mEdit = findViewById<EditText>(R.id.textInput)
+        val sharedPref = getSharedPreferences("PREF", Context.MODE_PRIVATE)
+        val getUsername = sharedPref.getString("USERNAME", "")
+        if( getUsername != " "){
+            val i = Intent(this, HomeActivity::class.java)
+            startActivity(i)
+        }
+
+        mButton!!.setOnClickListener {
+            val username = mEdit!!.text.toString()
+            val sharedPref = getSharedPreferences("PREF", Context.MODE_PRIVATE)
+            val editor = sharedPref.edit()
+            editor.putString("USERNAME", username)
+            editor.apply()
+
+            val i = Intent(this, HomeActivity::class.java)
+            startActivity(i)
+
+        }
     }
 
 }
