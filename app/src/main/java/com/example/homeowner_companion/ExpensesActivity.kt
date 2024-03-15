@@ -8,6 +8,6 @@ class ExpensesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_expenses)
 
-        //aaaaaaa
+        
     }
 }
